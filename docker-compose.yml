@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+
+  order-db:
+    image: mongo:latest
+    container_name: order-db
+    restart: always
+    networks:
+      - order-network
+    environment:
+      - MONGO_INITDB_DATABASE=order-db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./docker/mongo/init.js:/docker-entrypoint-initdb.d/init.js:ro
+
+  order-localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: sqs
+      DEBUG: "1"
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_SESSION_TOKEN: test
+    networks:
+      - order-network
+    volumes:
+      - "./localstack:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./local/init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh"
+
+networks:
+  order-network:
+    driver: bridge

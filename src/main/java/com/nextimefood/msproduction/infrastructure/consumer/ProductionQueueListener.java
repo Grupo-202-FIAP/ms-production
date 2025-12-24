@@ -1,14 +1,31 @@
 package com.nextimefood.msproduction.infrastructure.consumer;
 
+import com.nextimefood.msproduction.application.gateways.LoggerPort;
+import com.nextimefood.msproduction.infrastructure.producer.SagaProducer;
+import com.nextimefood.msproduction.utils.JsonConverter;
 import io.awspring.cloud.sqs.annotation.SqsListener;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class ProductionQueueListener {
 
-    @SqsListener("${sqs.queues.production-queue.name}")
-    public void listen(String message) {
-        System.out.println(message);
-    }
+    private final LoggerPort logger;
+    private final JsonConverter jsonConverter;
+    private final ProductionEventHandler eventHandler;
 
+    @SqsListener("${sqs.queues.production-queue.name}")
+    public void consumeMessage(String payload) {
+        try {
+            logger.info("[ProductionQueueListener] Mensagem recebida");
+            final var event = jsonConverter.toEvent(payload);
+            eventHandler.handle(event);
+        } catch (RuntimeException ex) {
+            logger.warn("[ProductionQueueListener] Evento ignorado por regra de negocio: {}", ex.getMessage());
+        } catch (Exception ex) {
+            logger.error("[ProductionQueueListener] Erro tecnico ao processar mensagem", ex);
+            throw ex;
+        }
+    }
 }

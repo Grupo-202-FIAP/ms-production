@@ -1,4 +1,4 @@
-package com.nextimefood.msproduction.config.sqs;
+package com.nextimefood.msproduction.application.config.sqs;
 
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Value;

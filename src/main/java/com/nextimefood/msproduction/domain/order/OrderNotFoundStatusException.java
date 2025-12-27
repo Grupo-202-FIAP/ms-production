@@ -1,6 +1,6 @@
 package com.nextimefood.msproduction.domain.order;
 
-import com.nextime.order.domain.enums.OrderStatus;
+import com.nextimefood.msproduction.domain.enums.OrderStatus;
 
 public class OrderNotFoundStatusException extends RuntimeException {
     public OrderNotFoundStatusException(OrderStatus status) {

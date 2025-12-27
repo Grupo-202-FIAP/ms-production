@@ -1,7 +1,17 @@
 package com.nextimefood.msproduction.domain.enums;
 
-public enum PaymentStatus {
-    PROCESSED,
-    EXPIRED
-}
+import lombok.Getter;
 
+@Getter
+public enum PaymentStatus {
+    PROCESSED("PROCESSED"),
+    PENDING("PENDING"),
+    EXPIRED("EXPIRED");
+
+    private final String status;
+
+    PaymentStatus(String status) {
+        this.status = status;
+    }
+
+}

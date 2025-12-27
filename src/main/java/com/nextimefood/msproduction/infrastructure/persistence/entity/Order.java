@@ -4,9 +4,6 @@ import com.nextimefood.msproduction.domain.enums.OrderStatus;
 import com.nextimefood.msproduction.domain.enums.PaymentStatus;
 import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -33,26 +30,24 @@ public class Order {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public String generateOrderId() {
-        final String shortUUID = UUID.randomUUID().toString().substring(0, END_ID).toUpperCase();
-        final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        final String datetime = LocalDateTime.now().format(dtf);
-        final String shuffledDateTime = shuffleString(datetime);
-        return "ORD-" + shortUUID + "-" + shuffledDateTime.substring(0, END_ID);
+    public void receive() {
+        this.status = OrderStatus.RECEIVED;
     }
 
-    private String shuffleString(String input) {
-        final List<Character> characters = new ArrayList<>();
-        for (char c : input.toCharArray()) {
-            characters.add(c);
-        }
-        Collections.shuffle(characters);
-        final StringBuilder output = new StringBuilder(input.length());
-        for (char c : characters) {
-            output.append(c);
-        }
-        return output.toString();
+    public void cancel() {
+        this.status = OrderStatus.CANCELLED;
     }
 
+    public void startPreparation() {
+        this.status = OrderStatus.PREPARING;
+    }
+
+    public void ready() {
+        this.status = OrderStatus.READY;
+    }
+
+    public void complete() {
+        this.status = OrderStatus.COMPLETED;
+    }
 
 }

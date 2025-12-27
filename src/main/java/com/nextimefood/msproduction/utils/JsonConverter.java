@@ -2,6 +2,7 @@ package com.nextimefood.msproduction.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextimefood.msproduction.application.gateways.LoggerPort;
+import com.nextimefood.msproduction.domain.order.OrderConversionException;
 import com.nextimefood.msproduction.infrastructure.persistence.entity.Event;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class JsonConverter {
             return objectMapper.writeValueAsString(object);
         } catch (Exception e) {
             logger.error("[toJson] Falha para converter objeto para JSON: {}", e);
-            throw new RuntimeException("[toJson] Falha para converter objeto para JSON: {}", e);
+            throw new OrderConversionException("Falha para converter objeto para JSON", e);
         }
     }
 
@@ -26,7 +27,7 @@ public class JsonConverter {
             return objectMapper.readValue(json, Event.class);
         } catch (Exception e) {
             logger.error("[toEvent] Falha para converter JSON para Event: {}", e);
-            throw new RuntimeException("[toEvent] Falha para converter JSON para Event: {}", e);
+            throw new OrderConversionException("Falha para converter JSON para Event", e);
         }
     }
 

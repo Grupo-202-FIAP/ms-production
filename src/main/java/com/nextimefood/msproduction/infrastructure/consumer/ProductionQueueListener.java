@@ -1,7 +1,7 @@
 package com.nextimefood.msproduction.infrastructure.consumer;
 
 import com.nextimefood.msproduction.application.gateways.LoggerPort;
-import com.nextimefood.msproduction.infrastructure.producer.SagaProducer;
+import com.nextimefood.msproduction.domain.order.OrderEventNotSupportedException;
 import com.nextimefood.msproduction.utils.JsonConverter;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class ProductionQueueListener {
             logger.info("[ProductionQueueListener] Mensagem recebida");
             final var event = jsonConverter.toEvent(payload);
             eventHandler.handle(event);
-        } catch (RuntimeException ex) {
+        } catch (OrderEventNotSupportedException ex) {
             logger.warn("[ProductionQueueListener] Evento ignorado por regra de negocio: {}", ex.getMessage());
         } catch (Exception ex) {
             logger.error("[ProductionQueueListener] Erro tecnico ao processar mensagem", ex);

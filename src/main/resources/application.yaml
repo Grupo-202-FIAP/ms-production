@@ -6,28 +6,30 @@ spring:
     enabled: false
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/msproduction
-    username: postgres
-    password: postgres
+    url: ${POSTGRES_DB_URL:jdbc:postgresql://localhost:5432/production_db}
+    username: ${POSTGRES_DB:postgres}
+    password: ${POSTGRES_DB_PASSWORD:production_password}
     driver-class-name: org.postgresql.Driver
 
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+    show-sql: true
 
   cloud:
     aws:
       region:
         static: ${AWS_REGION:us-east-1}
       credentials:
-        access-key: ${AWS_ACCESS_KEY_ID}
-        secret-key: ${AWS_SECRET_ACCESS_KEY}
+        access-key: ${AWS_ACCESS_KEY_ID:test}
+        secret-key: ${AWS_SECRET_ACCESS_KEY:test}
+      sqs:
+        endpoint: http://localhost:4566
 
   sqs:
     queues:
-      production-queue: ${SQS_PRODUCTION_QUEUE}
-      production-callback-queue: ${SQS_PRODUCTION_CALLBACK_QUEUE}
+      production-queue: ${SQS_PRODUCTION_QUEUE:production-queue}
+      production-callback-queue: ${SQS_PRODUCTION_CALLBACK_QUEUE:production-callback-queue}
 
 server:
   port: 8090

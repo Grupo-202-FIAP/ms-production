@@ -15,7 +15,7 @@ public class ProductionQueueListener {
     private final JsonConverter jsonConverter;
     private final ProductionEventHandler eventHandler;
 
-    @SqsListener("${sqs.queues.production-queue.name}")
+    @SqsListener("${spring.sqs.queues.production-queue}")
     public void consumeMessage(String payload) {
         try {
             logger.info("[ProductionQueueListener] Mensagem recebida");

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.1</version>
+		<version>3.2.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nextimefood</groupId>
@@ -32,8 +32,7 @@
 		<springdoc.version>2.5.0</springdoc.version>
 		<postgresql.version>42.7.8</postgresql.version>
 		<logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
-		<spring-cloud-aws-dependencies.version>3.1.1</spring-cloud-aws-dependencies.version>
-		<spring-cloud-aws-starter-sqs.version>4.0.0-M1</spring-cloud-aws-starter-sqs.version>
+		<spring-cloud-aws-dependencies.version>3.0.4</spring-cloud-aws-dependencies.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -89,7 +88,6 @@
 		<dependency>
 			<groupId>io.awspring.cloud</groupId>
 			<artifactId>spring-cloud-aws-starter-sqs</artifactId>
-			<version>${spring-cloud-aws-starter-sqs.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>

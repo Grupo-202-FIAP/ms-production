@@ -20,9 +20,6 @@ spring:
     aws:
       region:
         static: us-east-1
-      credentials:
-        access-key: test
-        secret-key: test
       sqs:
         endpoint: http://localhost:4566
 

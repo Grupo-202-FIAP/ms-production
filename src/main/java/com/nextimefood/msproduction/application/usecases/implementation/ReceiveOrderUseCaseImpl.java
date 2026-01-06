@@ -17,6 +17,7 @@ public class ReceiveOrderUseCaseImpl implements ReceiveOrderUseCase {
     private final LoggerPort logger;
     private final OrderMapper mapper;
 
+    //TODO: Verificar se o pedido já existe no banco
     @Override
     public OrderEntity execute(Order order) {
         try {

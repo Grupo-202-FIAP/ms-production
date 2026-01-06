@@ -11,7 +11,6 @@ import com.nextimefood.msproduction.domain.enums.SagaStatus;
 import com.nextimefood.msproduction.domain.order.OrderEventNotSupportedException;
 import com.nextimefood.msproduction.domain.entity.Event;
 import com.nextimefood.msproduction.domain.entity.History;
-import com.nextimefood.msproduction.domain.entity.Order;
 import com.nextimefood.msproduction.infrastructure.producer.SagaProducer;
 import com.nextimefood.msproduction.utils.JsonConverter;
 import java.time.LocalDateTime;

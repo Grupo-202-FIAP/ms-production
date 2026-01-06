@@ -2,9 +2,11 @@ package com.nextimefood.msproduction.application.usecases.implementation;
 
 import com.nextimefood.msproduction.application.gateways.LoggerPort;
 import com.nextimefood.msproduction.application.gateways.OrderRepositoryPort;
+import com.nextimefood.msproduction.application.mapper.OrderMapper;
 import com.nextimefood.msproduction.application.usecases.interfaces.ReadyOrderUseCase;
+import com.nextimefood.msproduction.domain.entity.Order;
 import com.nextimefood.msproduction.domain.order.OrderNotFoundException;
-import com.nextimefood.msproduction.infrastructure.persistence.entity.Order;
+import com.nextimefood.msproduction.infrastructure.persistence.entity.OrderEntity;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,14 +17,19 @@ public class ReadyOrderUseCaseImpl implements ReadyOrderUseCase {
 
     private final OrderRepositoryPort orderRepository;
     private final LoggerPort logger;
+    private final OrderMapper orderMapper;
 
     @Override
-    public Order execute(UUID orderId) {
+    public OrderEntity execute(UUID orderId) {
         try {
-            final var order = orderRepository.findById(orderId)
+            final var orderEntity = orderRepository.findById(orderId)
                     .orElseThrow(() -> new OrderNotFoundException(orderId));
-            order.ready();
-            return orderRepository.save(order);
+            
+            final var orderDomain = orderMapper.toDomain(orderEntity);
+            orderDomain.ready();
+            
+            final var updatedOrderEntity = orderMapper.toEntity(orderDomain);
+            return orderRepository.save(updatedOrderEntity);
         } catch (OrderNotFoundException e) {
             logger.warn("[ReadyOrderUseCase] {}", e.getMessage());
             throw e;

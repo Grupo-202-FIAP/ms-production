@@ -13,15 +13,15 @@ public class SagaProducer {
     private final LoggerPort logger;
     private final SqsAsyncClient sqsAsyncClient;
 
-    @Value("${spring.sqs.queues.production-queue}")
-    private String productionQueue;
+    @Value("${spring.sqs.queues.production-callback-queue}")
+    private String productionCallbackQueue;
 
     public void sendMessage(String payload) {
         try {
-            logger.info("[sendMessage] Enviando mensagem para a fila: {} com valores: {}", productionQueue, payload);
-            sqsAsyncClient.sendMessage(builder -> builder.queueUrl(productionQueue).messageBody(payload));
+            logger.info("[sendMessage] Enviando mensagem para a fila: {} com valores: {}", productionCallbackQueue, payload);
+            sqsAsyncClient.sendMessage(builder -> builder.queueUrl(productionCallbackQueue).messageBody(payload));
         } catch (Exception e) {
-            logger.error("[sendMessage] Falha ao enviar mensagem para a fila: {} com valores: {}", productionQueue, e);
+            logger.error("[sendMessage] Falha ao enviar mensagem para a fila: {} com valores: {}", productionCallbackQueue, e);
         }
     }
 }

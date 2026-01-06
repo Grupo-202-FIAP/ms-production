@@ -1,9 +1,9 @@
 package com.nextimefood.msproduction.application.usecases;
 
 import com.nextimefood.msproduction.domain.enums.OrderStatus;
-import com.nextimefood.msproduction.infrastructure.persistence.entity.Order;
+import com.nextimefood.msproduction.infrastructure.persistence.entity.OrderEntity;
 import java.util.UUID;
 
 public interface UpdateOrderUseCase {
-    Order execute(UUID orderID, OrderStatus status);
+    OrderEntity execute(UUID orderID, OrderStatus status);
 }

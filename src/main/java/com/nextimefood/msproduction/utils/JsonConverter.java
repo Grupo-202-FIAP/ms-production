@@ -3,14 +3,14 @@ package com.nextimefood.msproduction.utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextimefood.msproduction.application.gateways.LoggerPort;
 import com.nextimefood.msproduction.domain.order.OrderConversionException;
-import com.nextimefood.msproduction.infrastructure.persistence.entity.Event;
+import com.nextimefood.msproduction.domain.entity.Event;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class JsonConverter {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
     private final LoggerPort logger;
 
     public String toJson(Object object) {

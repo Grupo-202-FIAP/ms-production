@@ -1,7 +1,8 @@
 package com.nextimefood.msproduction.application.usecases.interfaces;
 
-import com.nextimefood.msproduction.infrastructure.persistence.entity.Order;
+import com.nextimefood.msproduction.domain.entity.Order;
+import com.nextimefood.msproduction.infrastructure.persistence.entity.OrderEntity;
 
 public interface ReceiveOrderUseCase {
-    Order execute(Order order);
+    OrderEntity execute(Order order);
 }

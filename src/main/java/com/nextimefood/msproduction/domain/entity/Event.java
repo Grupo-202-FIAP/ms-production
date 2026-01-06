@@ -1,4 +1,4 @@
-package com.nextimefood.msproduction.infrastructure.persistence.entity;
+package com.nextimefood.msproduction.domain.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;

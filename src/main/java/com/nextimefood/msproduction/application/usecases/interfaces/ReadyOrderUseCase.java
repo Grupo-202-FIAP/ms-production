@@ -1,9 +1,9 @@
 package com.nextimefood.msproduction.application.usecases.interfaces;
 
-import com.nextimefood.msproduction.infrastructure.persistence.entity.Order;
+import com.nextimefood.msproduction.infrastructure.persistence.entity.OrderEntity;
 import java.util.UUID;
 
 public interface ReadyOrderUseCase {
-    Order execute(UUID orderId);
+    OrderEntity execute(UUID orderId);
 }
 

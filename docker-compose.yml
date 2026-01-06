@@ -10,7 +10,7 @@ services:
 #      - production-network
 #    environment:
 #      - SPRING_PROFILES_ACTIVE=local
-#      - POSTGRES_DB_URL=jdbc:postgresql://localhost:5432/msproduction
+#      - POSTGRES_DB_URL=jdbc:postgresql://localhost:5432/production_db
 #      - POSTGRES_DB_USERNAME=production_user
 #      - POSTGRES_DB_PASSWORD=production_password
 #      - AWS_REGION=us-east-1

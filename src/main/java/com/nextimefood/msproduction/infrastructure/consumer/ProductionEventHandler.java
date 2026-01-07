@@ -8,6 +8,7 @@ import com.nextimefood.msproduction.application.usecases.interfaces.CancelOrderU
 import com.nextimefood.msproduction.application.usecases.interfaces.ReceiveOrderUseCase;
 import com.nextimefood.msproduction.application.usecases.interfaces.StartPreparationOrderUseCase;
 import com.nextimefood.msproduction.domain.enums.SagaStatus;
+import com.nextimefood.msproduction.domain.order.OrderConflictException;
 import com.nextimefood.msproduction.domain.order.OrderEventNotSupportedException;
 import com.nextimefood.msproduction.domain.entity.Event;
 import com.nextimefood.msproduction.domain.entity.History;
@@ -37,6 +38,9 @@ public class ProductionEventHandler {
                 case FAIL, ROLLBACK_PENDING -> handleRollback(event);
                 default -> throw new OrderEventNotSupportedException(event.getStatus());
             }
+        } catch (OrderConflictException ex) {
+            logger.warn("[ProductionEventHandler] Conflito detectado. Não será disparado callback. transactionId={}, message={}", event.getTransactionId(), ex.getMessage());
+            throw ex;
         } catch (Exception ex) {
             logger.error("[ProductionEventHandler] Erro ao processar evento, iniciando rollback. transactionId={}", event.getTransactionId(), ex);
             publishCallback(event, "Erro ao processar evento, iniciando rollback", SagaStatus.ROLLBACK_PENDING);

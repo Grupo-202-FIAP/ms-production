@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "orders")
 public class OrderEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private UUID transactionId;
     private String identifier;

@@ -1,28 +1,28 @@
 services:
 
-#  production-api:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    container_name: order-api
-#    restart: always
-#    networks:
-#      - production-network
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=local
-#      - POSTGRES_DB_URL=jdbc:postgresql://localhost:5432/production_db
-#      - POSTGRES_DB_USERNAME=production_user
-#      - POSTGRES_DB_PASSWORD=production_password
-#      - AWS_REGION=us-east-1
-#      - AWS_ACCESS_KEY_ID=test
-#      - AWS_SECRET_ACCESS_KEY=test
-#      - SQS_PRODUCTION_QUEUE=production-queue
-#      - SQS_PRODUCTION_CALLBACK_QUEUE=production-callback-queue
-#    ports:
-#      - "8090:8090"
-#    depends_on:
-#      - postgres
-#      - localstack
+  production-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order-api
+    restart: always
+    networks:
+      - production-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - POSTGRES_DB_URL=jdbc:postgresql://localhost:5432/production_db
+      - POSTGRES_DB_USERNAME=production_user
+      - POSTGRES_DB_PASSWORD=production_password
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - SQS_PRODUCTION_QUEUE=production-queue
+      - SQS_PRODUCTION_CALLBACK_QUEUE=production-callback-queue
+    ports:
+      - "8090:8090"
+    depends_on:
+      - postgres
+      - localstack
 
   postgres:
     image: postgres:17

@@ -7,7 +7,7 @@ spring:
 
   datasource:
     url: ${POSTGRES_DB_URL:jdbc:postgresql://localhost:5432/production_db}
-    username: ${POSTGRES_DB:postgres}
+    username: ${POSTGRES_DB_USERNAME:postgres}
     password: ${POSTGRES_DB_PASSWORD:production_password}
     driver-class-name: org.postgresql.Driver
 

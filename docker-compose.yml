@@ -21,8 +21,8 @@ services:
     ports:
       - "8090:8090"
     depends_on:
-      - postgres
-      - localstack
+      - production-postgres
+      - production-localstack
 
   production-postgres:
     image: postgres:17

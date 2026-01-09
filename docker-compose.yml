@@ -24,7 +24,7 @@ services:
       - postgres
       - localstack
 
-  postgres:
+  production-postgres:
     image: postgres:17
     container_name: production-postgres
     restart: always
@@ -44,7 +44,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  localstack:
+  production-localstack:
     image: localstack/localstack:latest
     container_name: production-localstack
     ports:

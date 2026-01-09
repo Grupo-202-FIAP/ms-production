@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: order-api
+    container_name: production-api
     restart: always
     networks:
       - production-network

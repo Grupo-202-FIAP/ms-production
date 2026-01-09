@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-production
+  namespace: default
+  labels:
+    app: ms-production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-production
+  template:
+    metadata:
+      labels:
+        app: ms-production
+        tags.datadoghq.com/service: ms-production
+        tags.datadoghq.com/env: dev
+        tags.datadoghq.com/version: "1.0.0"
+    spec:
+      serviceAccountName: ms-production-sa
+      containers:
+        - name: ms-production
+          image: 056075870573.dkr.ecr.us-east-1.amazonaws.com/ms-production:latest
+          ports:
+            - containerPort: 8090
+          envFrom:
+            - configMapRef:
+                name: ms-production-config
+            - secretRef:
+                name: ms-production-secrets
+          env:
+            - name: DD_SERVICE
+              value: ms-production
+            - name: DD_ENV
+              value: dev
+            - name: DD_VERSION
+              value: "1.0.0"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              memory: "512Mi"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8090
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8090
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3

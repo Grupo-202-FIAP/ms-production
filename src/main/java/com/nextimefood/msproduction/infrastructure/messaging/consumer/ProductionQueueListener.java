@@ -1,4 +1,4 @@
-package com.nextimefood.msproduction.infrastructure.consumer;
+package com.nextimefood.msproduction.infrastructure.messaging.consumer;
 
 import com.nextimefood.msproduction.application.gateways.LoggerPort;
 import com.nextimefood.msproduction.domain.order.OrderEventNotSupportedException;

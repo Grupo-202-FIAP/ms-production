@@ -1,4 +1,4 @@
-package com.nextimefood.msproduction.infrastructure.consumer;
+package com.nextimefood.msproduction.infrastructure.messaging.consumer;
 
 import static com.nextimefood.msproduction.domain.enums.EventSource.PRODUCTION;
 
@@ -12,7 +12,7 @@ import com.nextimefood.msproduction.domain.order.OrderConflictException;
 import com.nextimefood.msproduction.domain.order.OrderEventNotSupportedException;
 import com.nextimefood.msproduction.domain.entity.Event;
 import com.nextimefood.msproduction.domain.entity.History;
-import com.nextimefood.msproduction.infrastructure.producer.SagaProducer;
+import com.nextimefood.msproduction.infrastructure.messaging.producer.SagaProducer;
 import com.nextimefood.msproduction.utils.JsonConverter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

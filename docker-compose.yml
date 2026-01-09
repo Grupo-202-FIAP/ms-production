@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: order-api
+    container_name: production-api
     restart: always
     networks:
       - production-network
@@ -21,10 +21,10 @@ services:
     ports:
       - "8090:8090"
     depends_on:
-      - postgres
-      - localstack
+      - production-postgres
+      - production-localstack
 
-  postgres:
+  production-postgres:
     image: postgres:17
     container_name: production-postgres
     restart: always
@@ -44,7 +44,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  localstack:
+  production-localstack:
     image: localstack/localstack:latest
     container_name: production-localstack
     ports:

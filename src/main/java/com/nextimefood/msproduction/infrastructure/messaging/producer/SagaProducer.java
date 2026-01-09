@@ -1,4 +1,4 @@
-package com.nextimefood.msproduction.infrastructure.producer;
+package com.nextimefood.msproduction.infrastructure.messaging.producer;
 
 import com.nextimefood.msproduction.application.gateways.LoggerPort;
 import lombok.RequiredArgsConstructor;

@@ -2,19 +2,20 @@ spring:
   application:
     name: msproduction
 
-  flyway:
-    enabled: false
-
   datasource:
-    url: jdbc:postgresql://localhost:5432/production_db
-    username: postgres
-    password: production_password
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
 
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: false
 
   cloud:
     aws:
@@ -29,5 +30,4 @@ spring:
       production-callback-queue: production-callback-queue
 
 server:
-  port: 8090
-
+  port: 0

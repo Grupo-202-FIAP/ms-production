@@ -17,7 +17,7 @@ public class SqsConfig {
     private String region;
 
     @Bean
-    @Profile("local")
+    @Profile({"local", "test"})
     public SqsAsyncClient sqsAsyncClientLocal(
             @Value("${spring.cloud.aws.sqs.endpoint}") String endpoint
     ) {
@@ -33,7 +33,7 @@ public class SqsConfig {
     }
 
     @Bean
-    @Profile("!local")
+    @Profile("!local & !test")
     public SqsAsyncClient sqsAsyncClientEks() {
         return SqsAsyncClient.builder()
                 .region(Region.of(region))

@@ -44,9 +44,6 @@ jobs:
           echo "Aguardando LocalStack subir..."
           sleep 25
 
-      - name: Criar filas SQS no LocalStack
-        run: ./local/init-aws.sh
-
       - name: Rodar testes (unit + integration)
         run: mvn clean verify
 

@@ -8,10 +8,9 @@ import com.nextimefood.msproduction.domain.entity.Order;
 import com.nextimefood.msproduction.domain.enums.OrderStatus;
 import com.nextimefood.msproduction.domain.order.OrderConflictException;
 import com.nextimefood.msproduction.infrastructure.persistence.entity.OrderEntity;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 @AllArgsConstructor
@@ -25,7 +24,7 @@ public class ReceiveOrderUseCaseImpl implements ReceiveOrderUseCase {
     public OrderEntity execute(Order order) {
         try {
             final Optional<OrderEntity> existingOrder = orderRepository.findById(order.getId());
-            
+
             if (existingOrder.isPresent()) {
                 final var existing = existingOrder.get();
                 if (!OrderStatus.RECEIVED.equals(existing.getStatus())) {
@@ -34,7 +33,7 @@ public class ReceiveOrderUseCaseImpl implements ReceiveOrderUseCase {
                 // Se já está RECEIVED, pode atualizar normalmente
                 logger.info("[ReceiveOrderUseCase] Pedido com id={} já existe com status RECEIVED. Atualizando registro.", order.getId());
             }
-            
+
             order.receive();
             final var orderEntity = mapper.toEntity(order);
             return orderRepository.save(orderEntity);

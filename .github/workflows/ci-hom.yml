@@ -36,6 +36,9 @@ jobs:
       - name: Subir LocalStack
         run: docker compose up -d production-localstack
 
+      - name: Garantir permissão do init-aws.sh
+        run: chmod +x ./local/init-aws.sh
+
       - name: Aguardar LocalStack ficar saudável
         run: |
           for i in {1..30}; do

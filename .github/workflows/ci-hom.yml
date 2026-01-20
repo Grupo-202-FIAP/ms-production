@@ -48,6 +48,12 @@ jobs:
           docker logs production-localstack
           exit 1
 
+      - name: Garantir permissão do init-aws.sh
+        run: chmod +x ./local/init-aws.sh
+
+      - name: Criar filas SQS no LocalStack
+        run: ./local/init-aws.sh
+
       - name: Rodar testes (unit + integration)
         run: mvn clean verify
 

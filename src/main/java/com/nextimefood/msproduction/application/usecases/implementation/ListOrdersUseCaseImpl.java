@@ -19,10 +19,10 @@ public class ListOrdersUseCaseImpl implements ListOrdersUseCase {
     @Override
     public Page<OrderEntity> execute(Pageable pageable) {
         try {
-            logger.info("[ListOrdersUseCase] Listando pedidos com paginação. page={}, size={}", 
+            logger.info("[ListOrdersUseCase] Listando pedidos com paginação. page={}, size={}",
                     pageable.getPageNumber(), pageable.getPageSize());
             final var orders = orderRepository.findAll(pageable);
-            logger.info("[ListOrdersUseCase] Pedidos encontrados: totalElements={}, totalPages={}", 
+            logger.info("[ListOrdersUseCase] Pedidos encontrados: totalElements={}, totalPages={}",
                     orders.getTotalElements(), orders.getTotalPages());
             return orders;
         } catch (Exception e) {

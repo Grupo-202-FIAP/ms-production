@@ -59,10 +59,10 @@ public class OrderController {
     public ResponseEntity<Page<OrderEntity>> list(
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
-            logger.info("[OrderController] Listando pedidos com paginação. page={}, size={}", 
+            logger.info("[OrderController] Listando pedidos com paginação. page={}, size={}",
                     pageable.getPageNumber(), pageable.getPageSize());
             final var orders = listOrdersUseCase.execute(pageable);
-            logger.info("[OrderController] Pedidos listados: totalElements={}, totalPages={}", 
+            logger.info("[OrderController] Pedidos listados: totalElements={}, totalPages={}",
                     orders.getTotalElements(), orders.getTotalPages());
             return ResponseEntity.ok().body(orders);
         } catch (Exception e) {

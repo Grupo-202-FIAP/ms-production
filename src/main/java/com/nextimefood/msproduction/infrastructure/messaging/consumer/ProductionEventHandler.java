@@ -7,11 +7,11 @@ import com.nextimefood.msproduction.application.gateways.OrderRepositoryPort;
 import com.nextimefood.msproduction.application.usecases.interfaces.CancelOrderUseCase;
 import com.nextimefood.msproduction.application.usecases.interfaces.ReceiveOrderUseCase;
 import com.nextimefood.msproduction.application.usecases.interfaces.StartPreparationOrderUseCase;
+import com.nextimefood.msproduction.domain.entity.Event;
+import com.nextimefood.msproduction.domain.entity.History;
 import com.nextimefood.msproduction.domain.enums.SagaStatus;
 import com.nextimefood.msproduction.domain.order.OrderConflictException;
 import com.nextimefood.msproduction.domain.order.OrderEventNotSupportedException;
-import com.nextimefood.msproduction.domain.entity.Event;
-import com.nextimefood.msproduction.domain.entity.History;
 import com.nextimefood.msproduction.infrastructure.messaging.producer.SagaProducer;
 import com.nextimefood.msproduction.utils.JsonConverter;
 import java.time.LocalDateTime;
@@ -39,7 +39,8 @@ public class ProductionEventHandler {
                 default -> throw new OrderEventNotSupportedException(event.getStatus());
             }
         } catch (OrderConflictException ex) {
-            logger.warn("[ProductionEventHandler] Conflito detectado. Não será disparado callback. transactionId={}, message={}", event.getTransactionId(), ex.getMessage());
+            logger.warn("[ProductionEventHandler] Conflito detectado. Não será disparado callback. transactionId={}, message={}",
+                    event.getTransactionId(), ex.getMessage());
             throw ex;
         } catch (Exception ex) {
             logger.error("[ProductionEventHandler] Erro ao processar evento, iniciando rollback. transactionId={}", event.getTransactionId(), ex);
@@ -91,7 +92,7 @@ public class ProductionEventHandler {
 
         history.add(new History(PRODUCTION.getSource(), event.getPayload().getStatus().name(), message, LocalDateTime.now()));
 
-//        event.setPayload(order);
+        //event.setPayload(order);
         event.setHistory(history);
         event.setStatus(sagaStatus.name());
         event.setSource(PRODUCTION.getSource());

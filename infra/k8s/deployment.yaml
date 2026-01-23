@@ -21,7 +21,7 @@ spec:
       serviceAccountName: ms-production-sa
       containers:
         - name: ms-production
-          image: 056075870573.dkr.ecr.us-east-1.amazonaws.com/ms-production:latest
+          image: 500782030170.dkr.ecr.us-east-1.amazonaws.com/ms-production:latest
           ports:
             - containerPort: 8090
           envFrom:
@@ -38,10 +38,11 @@ spec:
               value: "1.0.0"
           resources:
             requests:
-              cpu: "100m"
-              memory: "256Mi"
+              cpu: 300m
+              memory: 1Gi
             limits:
-              memory: "512Mi"
+              cpu: 1
+              memory: 2Gi
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

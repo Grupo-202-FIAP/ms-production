@@ -9,7 +9,7 @@ resource "aws_iam_policy" "ms_production_ssm" {
         "ssm:GetParameter",
         "ssm:GetParameters"
       ]
-      Resource = "arn:aws:ssm:${var.aws_region}:056075870573:parameter/*"
+      Resource = "arn:aws:ssm:${var.aws_region}:500782030170:parameter/*"
     }]
   })
 }

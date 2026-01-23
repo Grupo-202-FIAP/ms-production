@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-production-db
+  namespace: default
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    metadata:
+      name: init-production-db
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: init-db
+          image: postgres:17
+          env:
+            - name: PGHOST
+              value: postgresdb.default.svc.cluster.local
+            - name: PGPORT
+              value: "5432"
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: username
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
+          command:
+            - /bin/bash
+            - -c
+            - |
+              echo "Aguardando PostgreSQL estar pronto..."
+              until pg_isready -h $PGHOST -p $PGPORT -U $PGUSER; do
+                echo "PostgreSQL não está pronto ainda. Aguardando..."
+                sleep 2
+              done
+              
+              echo "PostgreSQL está pronto. Verificando se o banco production_db existe..."
+              if psql -U $PGUSER -h $PGHOST -lqt | cut -d \| -f 1 | grep -qw production_db; then
+                echo "Banco production_db já existe."
+              else
+                echo "Criando banco production_db..."
+                psql -U $PGUSER -h $PGHOST -c "CREATE DATABASE production_db;"
+                echo "Banco production_db criado com sucesso!"
+              fi
+              
+              echo "Listando bancos de dados:"
+              psql -U $PGUSER -h $PGHOST -c "\l"

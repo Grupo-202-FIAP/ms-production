@@ -110,6 +110,25 @@ jobs:
         working-directory: infra/k8s
         run: kubectl apply -R -f .
 
+      - name: Criar banco de dados production_db
+        run: |
+          echo "Aguardando pod do PostgreSQL estar pronto..."
+          kubectl wait --for=condition=ready pod -l app=postgresdb --timeout=300s || true
+          
+          echo "Verificando e criando banco production_db se necessário..."
+          kubectl exec -i $(kubectl get pod -l app=postgresdb -o jsonpath='{.items[0].metadata.name}') -- bash -c '
+          export PGPASSWORD=$(cat /run/secrets/postgres-secret/password 2>/dev/null || echo "postgres")
+          PGUSER=$(cat /run/secrets/postgres-secret/username 2>/dev/null || echo "postgres")
+          
+          if psql -U $PGUSER -lqt | cut -d \| -f 1 | grep -qw production_db; then
+            echo "Banco production_db já existe."
+          else
+            echo "Criando banco production_db..."
+            psql -U $PGUSER -c "CREATE DATABASE production_db;"
+            echo "Banco production_db criado com sucesso!"
+          fi
+          ' || echo "Aviso: Não foi possível criar o banco. Verifique se o PostgreSQL está rodando."
+
       - name: Atualizar Deployment com nova imagem (se existir)
         run: |
           if kubectl get deployment ms-production-deployment >/dev/null 2>&1; then

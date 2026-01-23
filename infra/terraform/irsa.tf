@@ -11,16 +11,9 @@ resource "aws_iam_role" "ms_production_irsa" {
       Action = "sts:AssumeRoleWithWebIdentity"
       Condition = {
         StringEquals = {
-          format(
-            "%s:sub",
-            data.terraform_remote_state.kubernetes.outputs.cluster_oidc_provider_url
-          ) = "system:serviceaccount:default:ms-production-sa"
-          format(
-            "%s:aud",
-            data.terraform_remote_state.kubernetes.outputs.cluster_oidc_provider_url
-          ) = "sts.amazonaws.com"
+          "${data.terraform_remote_state.kubernetes.outputs.cluster_oidc_provider_url}:sub" = "system:serviceaccount:default:ms-production-sa"
+          "${data.terraform_remote_state.kubernetes.outputs.cluster_oidc_provider_url}:aud" = "sts.amazonaws.com"
         }
-
       }
     }]
   })

@@ -37,12 +37,12 @@ spec:
             - name: DD_VERSION
               value: "1.0.0"
           resources:
+            limits:
+              cpu: 500m
+              memory: 1536Mi
             requests:
               cpu: 300m
-              memory: 1Gi
-            limits:
-              cpu: 1
-              memory: 2Gi
+              memory: 768Mi
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness

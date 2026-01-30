@@ -34,7 +34,7 @@
 		<logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
 		<spring-cloud-aws-dependencies.version>3.0.4</spring-cloud-aws-dependencies.version>
 		<lombok.version>1.18.30</lombok.version>
-		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+		<org.mapstruct.version>1.6.3</org.mapstruct.version>
 		<cucumber-java.version>7.15.0</cucumber-java.version>
 		
 		<!-- SonarQube/SonarCloud: Excluir tudo exceto UseCases -->
